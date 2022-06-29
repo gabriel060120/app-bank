@@ -1,5 +1,6 @@
 import 'package:bytebank/models/saldo.dart';
 import 'package:bytebank/screens/dashboard/saldo.dart';
+import 'package:bytebank/screens/dashboard/ultimas_transferencias.dart';
 import 'package:bytebank/screens/deposito/formulario.dart';
 import 'package:bytebank/screens/transferencia/formulario.dart';
 import 'package:flutter/material.dart';
@@ -19,42 +20,44 @@ class Dashboard extends StatelessWidget {
               alignment: Alignment.topCenter,
               child: SaldoCard(),
             ),
-            ButtonBar(
-              alignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.green)),
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return FormularioDeposito();
-                      }));
-                    },
-                    child: Text('Deposito')),
-                ElevatedButton(
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.green)),
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return FormularioTransferencia();
-                      }));
-                    },
-                    child: Text('Transferencia')),
-              ],
+            Container(
+              child: ButtonBar(
+                alignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    child: ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.green)),
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return FormularioDeposito();
+                          }));
+                        },
+                        child: Container(
+                            alignment: Alignment.center,
+                            width: MediaQuery.of(context).size.width * 0.35,
+                            child: Text('Deposito'))),
+                  ),
+                  ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.green)),
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return FormularioTransferencia();
+                        }));
+                      },
+                      child: Container(
+                          alignment: Alignment.center,
+                          width: MediaQuery.of(context).size.width * 0.35,
+                          child: Text('Transferencia'))),
+                ],
+              ),
             ),
-            ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.green)),
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return ListaTransferencias();
-                  }));
-                },
-                child: Text('Transferencias')),
+            UltimasTransferencias(),
           ],
         ));
   }
