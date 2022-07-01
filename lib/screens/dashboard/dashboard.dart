@@ -12,7 +12,20 @@ class Dashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Bytebank'),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Bytebank'),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 8),
+                child: Image.asset(
+                  'assets/images/bytebank_logo.png',
+                  width: 40,
+                  height: 40,
+                ),
+              ),
+            ],
+          ),
         ),
         body: ListView(
           children: [
