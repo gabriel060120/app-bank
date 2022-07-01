@@ -23,17 +23,31 @@ class UltimasTransferencias extends StatelessWidget {
           "Ultimas Transferências",
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
-        Consumer<Transferencias>(builder: ((context, value, child) {
-          final _quantidade = value.transferencias.length;
-          final _ultimasTransferencias = value.transferencias.reversed.toList();
-
-          // return ListView.builder(
-          //     itemCount: ,
-          //     itemBuilder: ((context, index) {
-          //       return ItemTransferencia_ultimasTransferencias[index]);
-          //     }));
-          return Container();
-        })),
+        Container(
+          height: MediaQuery.of(context).size.height * 0.4,
+          child: Consumer<Transferencias>(builder: ((context, value, child) {
+            final _quantidade = value.transferencias.length > 3
+                ? 3
+                : value.transferencias.length;
+            final _ultimasTransferencias =
+                value.transferencias.reversed.toList();
+            if (_quantidade > 0)
+              return Expanded(
+                child: ListView.builder(
+                    itemCount: _quantidade,
+                    itemBuilder: (context, index) {
+                      return ItemTransferencia(_ultimasTransferencias[index]);
+                    }),
+              );
+            return Container(
+              alignment: Alignment.center,
+              child: Text(
+                "Você não possui transferências",
+                style: TextStyle(fontSize: 18),
+              ),
+            );
+          })),
+        ),
         ElevatedButton(
             style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Colors.green)),
@@ -43,7 +57,7 @@ class UltimasTransferencias extends StatelessWidget {
               }));
             },
             child: Container(
-              child: Center(child: Text('Transferencias')),
+              child: Center(child: Text('Ver todas transferências')),
               width: MediaQuery.of(context).size.width * 0.8,
             )),
       ],
