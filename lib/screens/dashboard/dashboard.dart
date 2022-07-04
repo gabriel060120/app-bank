@@ -1,4 +1,5 @@
 import 'package:bytebank/models/saldo.dart';
+import 'package:bytebank/screens/contatos/contacts_list.dart';
 import 'package:bytebank/screens/dashboard/saldo.dart';
 import 'package:bytebank/screens/dashboard/ultimas_transferencias.dart';
 import 'package:bytebank/screens/deposito/formulario.dart';
@@ -50,7 +51,7 @@ class Dashboard extends StatelessWidget {
                         },
                         child: Container(
                             alignment: Alignment.center,
-                            width: MediaQuery.of(context).size.width * 0.35,
+                            width: MediaQuery.of(context).size.width * 0.2,
                             child: Text('Deposito'))),
                   ),
                   ElevatedButton(
@@ -65,8 +66,22 @@ class Dashboard extends StatelessWidget {
                       },
                       child: Container(
                           alignment: Alignment.center,
-                          width: MediaQuery.of(context).size.width * 0.35,
+                          width: MediaQuery.of(context).size.width * 0.25,
                           child: Text('Transferencia'))),
+                  ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.green)),
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return ContactsList();
+                        }));
+                      },
+                      child: Container(
+                          alignment: Alignment.center,
+                          width: MediaQuery.of(context).size.width * 0.2,
+                          child: Text('Contatos'))),
                 ],
               ),
             ),
