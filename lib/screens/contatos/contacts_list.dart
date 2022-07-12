@@ -1,23 +1,45 @@
-import 'package:flutter/cupertino.dart';
+import 'package:bytebank/database/app_database.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'contact_form.dart';
-import 'contact_model.dart';
+import '../../models/contact_model.dart';
 
-class ContactsList extends StatelessWidget {
+class ContactsList extends StatefulWidget {
   const ContactsList({Key key}) : super(key: key);
 
   @override
+  State<ContactsList> createState() => _ContactsListState();
+}
+
+class _ContactsListState extends State<ContactsList> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    List<Contact> _contatos = [Contact(conta: 112, name: "Marcos")];
     return Scaffold(
       appBar: AppBar(
         title: Text("Contatos"),
       ),
-      body: ListView.builder(
-        itemCount: _contatos.length,
-        itemBuilder: (context, index) {
-          return ItemContacts(_contatos[index]);
+      body: FutureBuilder(
+        future: findAll(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            List<Contact> items = snapshot.data;
+            return items.isNotEmpty
+                ? ListView.builder(
+                    itemCount: items.length,
+                    itemBuilder: (context, index) {
+                      return ItemContacts(items[index]);
+                    })
+                : Center(
+                    child: Text("Você ainda não possui contatos salvos"),
+                  );
+          }
+          return Container();
         },
       ),
       floatingActionButton: FloatingActionButton(
@@ -27,7 +49,7 @@ class ContactsList extends StatelessWidget {
               MaterialPageRoute(
                 builder: (context) => ContactForm(),
               )).then((value) {
-            _contatos.add(value);
+            save(value);
           });
         },
         child: Icon(Icons.add),

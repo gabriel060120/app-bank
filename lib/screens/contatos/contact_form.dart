@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-import 'contact_model.dart';
+import '../../models/contact_model.dart';
 
 class ContactForm extends StatefulWidget {
   ContactForm({Key key}) : super(key: key);

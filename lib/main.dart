@@ -1,20 +1,30 @@
+import 'package:bytebank/database/app_database.dart';
 import 'package:bytebank/models/saldo.dart';
 import 'package:bytebank/models/transferencias.dart';
 import 'package:bytebank/screens/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
+import 'package:sqflite/sqflite.dart';
 
-void main() => runApp(MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => Saldo(0),
-        ),
-        ChangeNotifierProvider(
-          create: ((context) => Transferencias()),
-        )
-      ],
-      child: BytebankApp(),
-    ));
+import 'models/contact_model.dart';
+
+void main(Context) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  var data = await createDatabase();
+
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(
+        create: (context) => Saldo(0),
+      ),
+      ChangeNotifierProvider(
+        create: ((context) => Transferencias()),
+      ),
+    ],
+    child: BytebankApp(),
+  ));
+}
 
 class BytebankApp extends StatelessWidget {
   @override
