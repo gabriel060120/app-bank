@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
+import '../../database/app_database.dart';
 import '../../models/contact_model.dart';
 
 class ContactForm extends StatefulWidget {
@@ -64,7 +65,8 @@ class _ContactFormState extends State<ContactForm> {
                     final int newConta = int.tryParse(contaController.text);
                     final Contact newContact =
                         Contact(name: newName, conta: newConta);
-                    Navigator.pop(context, newContact);
+                    save(newContact);
+                    Navigator.pop(context);
                   }
                 },
                 child: Text("Salvar")),

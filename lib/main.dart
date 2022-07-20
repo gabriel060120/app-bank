@@ -11,8 +11,7 @@ import 'models/contact_model.dart';
 
 void main(Context) async {
   WidgetsFlutterBinding.ensureInitialized();
-  var data = await createDatabase();
-
+  createDatabase();
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(
@@ -30,6 +29,7 @@ class BytebankApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.green[900],
         appBarTheme: AppBarTheme(backgroundColor: Colors.green),

@@ -24,23 +24,32 @@ class _ContactsListState extends State<ContactsList> {
       appBar: AppBar(
         title: Text("Contatos"),
       ),
-      body: FutureBuilder(
-        future: findAll(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            List<Contact> items = snapshot.data;
-            return items.isNotEmpty
-                ? ListView.builder(
-                    itemCount: items.length,
-                    itemBuilder: (context, index) {
-                      return ItemContacts(items[index]);
-                    })
-                : Center(
-                    child: Text("Você ainda não possui contatos salvos"),
-                  );
-          }
-          return Container();
+      body: RefreshIndicator(
+        onRefresh: () async {
+          setState(() {
+            findAll();
+          });
         },
+        child: FutureBuilder(
+          future: findAll(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              List<Contact> items = snapshot.data;
+              return items.isNotEmpty
+                  ? ListView.builder(
+                      itemCount: items.length,
+                      itemBuilder: (context, index) {
+                        return ItemContacts(items[index]);
+                      })
+                  : Center(
+                      child: Text("Você ainda não possui contatos salvos"),
+                    );
+            }
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -48,9 +57,11 @@ class _ContactsListState extends State<ContactsList> {
               context,
               MaterialPageRoute(
                 builder: (context) => ContactForm(),
-              )).then((value) {
-            save(value);
-          });
+              ));
+          //     .then((value) {
+          //   findAll();
+          // });
+          findAll();
         },
         child: Icon(Icons.add),
       ),
@@ -68,7 +79,7 @@ class ItemContacts extends StatelessWidget {
     return Card(
         child: ListTile(
       title: Text(
-        _contact.name,
+        '${_contact.name}',
         style: TextStyle(fontSize: 24),
       ),
       subtitle: Text(
